@@ -8,5 +8,5 @@ echo "Unzipping dump..."
 tar -xzf dump.tar.gz
 echo "Unzip complete"
 echo "Starting import..."
-mysql -h db -u$DB_USER -p$DB_PASSWORD < dump.sql
+mysql -h$DB_HOST -u$DB_USER -p$DB_PASSWORD < dump.sql
 echo "Import finished"

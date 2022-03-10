@@ -1,7 +1,6 @@
-import { Exclude, Expose, Transform, Type } from 'class-transformer';
-import * as R from 'ramda';
+import { Exclude, Expose, plainToInstance } from 'class-transformer';
 
-import { Store } from 'server/data/models';
+import { Store, StoreHours } from 'server/data/models';
 import { StoreHourTransformer } from './storeHour.transformer';
 
 @Exclude()
@@ -28,9 +27,17 @@ export class StoreTransformer {
   sortOrder: number;
 
   @Expose()
-  @Transform(R.ifElse(R.isEmpty, R.always(null), R.head))
-  @Type(() => StoreHourTransformer)
-  storeHours: StoreHourTransformer;
+  hours: StoreHours[];
+
+  @Expose()
+  get storeHours() {
+    return this?.hours?.length > 0
+      ? plainToInstance(StoreHourTransformer, this.hours[0])
+      : this.hours;
+  }
+
+  @Expose()
+  distance: number;
 
   constructor(partial: Partial<Store>) {
     Object.assign(this, partial);
