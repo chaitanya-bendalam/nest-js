@@ -14,7 +14,6 @@ import { plainToInstance } from 'class-transformer';
 import { StoreService } from './store.service';
 import { StoreTransformer } from './store.transformer';
 import { GetStoreQuery } from '../../data/models/storeQuery';
-import { Store } from 'antd/lib/form/interface';
 
 @Controller('api/stores')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -33,7 +32,7 @@ export class StoreController {
   ): Promise<StoreTransformer[]> {
     queryParams.limit = queryParams.limit > 50 ? 50 : queryParams.limit;
     const stores = await this.storeService.getList(queryParams);
-    stores.map((store: Store) => {
+    stores.map((store) => {
       const [newLat, newLng] = [
         queryParams.lat - Number(store.lat),
         queryParams.lng - Number(store.long),

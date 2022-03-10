@@ -20,4 +20,14 @@ describe('AppController (e2e)', () => {
       .get('/')
       .expect(200);
   });
+  it('/ (GET STORES)', () => {
+    return request(app.getHttpServer())
+      .get('/api/stores')
+      .expect(200);
+  });
+  it('/ (GET STORES WITH QUERY PARAMS)', () => {
+    return request(app.getHttpServer())
+      .get('/api/stores?lat=56.83&lng=159.13')
+      .expect(200);
+  });
 });
